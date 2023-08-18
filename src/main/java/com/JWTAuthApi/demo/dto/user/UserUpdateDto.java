@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @Getter
 public class UserUpdateDto {
 
-    private String username;
+  private String username;
 }

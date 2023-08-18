@@ -21,15 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final JwtTokenizer jwtTokenizer;
+  private final JwtTokenizer jwtTokenizer;
 
-    @GetMapping("/test")
-    public LoginUser argumentsTest(@IfLogin LoginUser loginUser) {
-        return loginUser;
-    }
+  @GetMapping("/test")
+  public LoginUser argumentsTest(@IfLogin LoginUser loginUser) {
+    return loginUser;
+  }
 
-    @GetMapping("/test2")
-    public String userCheck() {
-        return "User Check ok";
-    }
+  @GetMapping("/test2")
+  public String userCheck() {
+    return "User Check ok";
+  }
 }

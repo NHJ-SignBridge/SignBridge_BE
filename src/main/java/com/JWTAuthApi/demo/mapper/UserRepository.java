@@ -6,12 +6,14 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserRepository {
-    void saveUser(User user);
 
-    User findByEmail(String email);
+  void saveUser(User user);
 
-    User findById(Long userId);
+  User findByEmail(String email);
 
-    void updateUser(@Param("userId") Long userId, @Param("username") String username);
-    void updateUserPassword(@Param("userId") Long userId, @Param("password") String password);
+  User findById(Long userId);
+
+  void updateUser(@Param("userId") Long userId, @Param("username") String username);
+
+  void updateUserPassword(@Param("userId") Long userId, @Param("password") String password);
 }

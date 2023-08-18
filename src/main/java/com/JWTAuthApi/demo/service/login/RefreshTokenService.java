@@ -9,18 +9,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RefreshTokenService {
 
-    private final RefreshTokenRepository refreshTokenRepository;
+  private final RefreshTokenRepository refreshTokenRepository;
 
-    public RefreshToken saveRefreshToken(RefreshToken refreshToken) {
-        refreshTokenRepository.saveRefreshToken(refreshToken);
-        return refreshToken;
-    }
+  public RefreshToken saveRefreshToken(RefreshToken refreshToken) {
+    refreshTokenRepository.saveRefreshToken(refreshToken);
+    return refreshToken;
+  }
 
-    public RefreshToken findRefreshToken(Long userId) {
-        return refreshTokenRepository.findRefreshToken(userId);
-    }
+  public RefreshToken findRefreshToken(Long userId) {
+    return refreshTokenRepository.findRefreshToken(userId);
+  }
 
-    public void deleteRefreshToken(String refreshToken) {
-        refreshTokenRepository.deleteRefreshToken(refreshToken);
-    }
+  public void deleteRefreshToken(String refreshToken) {
+    refreshTokenRepository.deleteRefreshToken(refreshToken);
+  }
 }

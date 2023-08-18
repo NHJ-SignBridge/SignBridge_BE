@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class UserInfo {
-    private Long userId;
-    private String email;
-    private String username;
+
+  private Long userId;
+  private String email;
+  private String username;
 }

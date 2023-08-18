@@ -22,39 +22,40 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
-    private final JwtTokenizer jwtTokenizer;
+  private final JwtTokenizer jwtTokenizer;
 
-    @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        JwtAuthenticationToken authenticationToken = (JwtAuthenticationToken) authentication;
+  @Override
+  public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    JwtAuthenticationToken authenticationToken = (JwtAuthenticationToken) authentication;
 
-        // 전달받은 토큰을 검증한다. 기간이 만료되었는지, 토큰 문자열이 문제가 있는지 등
-        Claims claims = jwtTokenizer.parseAccessToken(authenticationToken.getToken());
+    // 전달받은 토큰을 검증한다. 기간이 만료되었는지, 토큰 문자열이 문제가 있는지 등
+    Claims claims = jwtTokenizer.parseAccessToken(authenticationToken.getToken());
 
-        Long userId = claims.get("userId", Long.class);
-        String email = claims.getSubject();
-        String username = claims.get("username", String.class);
-        List<GrantedAuthority> authorities = getGrantedAuthorities(claims);
+    Long userId = claims.get("userId", Long.class);
+    String email = claims.getSubject();
+    String username = claims.get("username", String.class);
+    List<GrantedAuthority> authorities = getGrantedAuthorities(claims);
 
-        UserInfo userInfo = UserInfo
-                .builder()
-                .userId(userId)
-                .email(email)
-                .username(username)
-                .build();
+    UserInfo userInfo = UserInfo
+        .builder()
+        .userId(userId)
+        .email(email)
+        .username(username)
+        .build();
 
-        return new JwtAuthenticationToken(authorities, userInfo, null);
-    }
+    return new JwtAuthenticationToken(authorities, userInfo, null);
+  }
 
-    private List<GrantedAuthority> getGrantedAuthorities(Claims claims) {
-        log.info("***** getGrantedAuthorities= {} *****", claims.get("roleType").toString()); // ROLE_USER
-        return Arrays.stream(new String[]{claims.get("roleType").toString()})
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-    }
+  private List<GrantedAuthority> getGrantedAuthorities(Claims claims) {
+    log.info("***** getGrantedAuthorities= {} *****",
+        claims.get("roleType").toString()); // ROLE_USER
+    return Arrays.stream(new String[]{claims.get("roleType").toString()})
+        .map(SimpleGrantedAuthority::new)
+        .collect(Collectors.toList());
+  }
 
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return JwtAuthenticationToken.class.isAssignableFrom(authentication);
-    }
+  @Override
+  public boolean supports(Class<?> authentication) {
+    return JwtAuthenticationToken.class.isAssignableFrom(authentication);
+  }
 }

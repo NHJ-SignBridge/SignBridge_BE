@@ -22,56 +22,61 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class LoginService {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtTokenizer jwtTokenizer;
-    private final RefreshTokenService refreshTokenService;
-    private final UserService userService;
+  private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
+  private final JwtTokenizer jwtTokenizer;
+  private final RefreshTokenService refreshTokenService;
+  private final UserService userService;
 
-    @Transactional
-    public UserSignupResponseDto saveUser(UserSignupDto userSignupDto) {
-        if (userRepository.findByEmail(userSignupDto.getEmail()) != null)
-            throw new CustomException(ErrorCode.EMAIL_DUPLICATE);
+  @Transactional
+  public UserSignupResponseDto saveUser(UserSignupDto userSignupDto) {
+      if (userRepository.findByEmail(userSignupDto.getEmail()) != null) {
+          throw new CustomException(ErrorCode.EMAIL_DUPLICATE);
+      }
 
-        User user = User.builder()
-                .email(userSignupDto.getEmail())
-                .username(userSignupDto.getUsername())
-                .password(passwordEncoder.encode(userSignupDto.getPassword()))
-                .providerType(ProviderType.LOCAL)
-                .roleType(RoleType.USER)
-                .build();
+    User user = User.builder()
+        .email(userSignupDto.getEmail())
+        .username(userSignupDto.getUsername())
+        .password(passwordEncoder.encode(userSignupDto.getPassword()))
+        .providerType(ProviderType.LOCAL)
+        .roleType(RoleType.USER)
+        .build();
 
-        userRepository.saveUser(user);
+    userRepository.saveUser(user);
 
-        return UserSignupResponseDto
-                .builder()
-                .userId(user.getUserId())
-                .email(user.getEmail())
-                .username(user.getUsername())
-                .build();
-    }
+    return UserSignupResponseDto
+        .builder()
+        .userId(user.getUserId())
+        .email(user.getEmail())
+        .username(user.getUsername())
+        .build();
+  }
 
-    public UserLoginResponseDto login(UserLoginDto userLoginDto) {
-        User user = userService.findByEmail(userLoginDto.getEmail());
-        if (user == null)
-            throw new CustomException(ErrorCode.ID_PASSWORD_NOT_MATCH);
+  public UserLoginResponseDto login(UserLoginDto userLoginDto) {
+    User user = userService.findByEmail(userLoginDto.getEmail());
+      if (user == null) {
+          throw new CustomException(ErrorCode.ID_PASSWORD_NOT_MATCH);
+      }
 
-        if (!passwordEncoder.matches(userLoginDto.getPassword(), user.getPassword()))
-            throw new CustomException(ErrorCode.ID_PASSWORD_NOT_MATCH);
+      if (!passwordEncoder.matches(userLoginDto.getPassword(), user.getPassword())) {
+          throw new CustomException(ErrorCode.ID_PASSWORD_NOT_MATCH);
+      }
 
-        String accessToken = jwtTokenizer.createAccessToken(user.getUserId(), user.getEmail(), user.getUsername(), RoleType.USER.getCode());
-        String refreshToken = jwtTokenizer.createRefreshToken(user.getUserId(), user.getEmail(), user.getUsername(), RoleType.USER.getCode());
+    String accessToken = jwtTokenizer.createAccessToken(user.getUserId(), user.getEmail(),
+        user.getUsername(), RoleType.USER.getCode());
+    String refreshToken = jwtTokenizer.createRefreshToken(user.getUserId(), user.getEmail(),
+        user.getUsername(), RoleType.USER.getCode());
 
-        RefreshToken rToken = new RefreshToken(user.getUserId(), refreshToken);
-        refreshTokenService.saveRefreshToken(rToken);
+    RefreshToken rToken = new RefreshToken(user.getUserId(), refreshToken);
+    refreshTokenService.saveRefreshToken(rToken);
 
-        return UserLoginResponseDto.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .userId(user.getUserId())
-                .name(user.getUsername())
-                .build();
-    }
+    return UserLoginResponseDto.builder()
+        .accessToken(accessToken)
+        .refreshToken(refreshToken)
+        .userId(user.getUserId())
+        .name(user.getUsername())
+        .build();
+  }
 
 
 }
