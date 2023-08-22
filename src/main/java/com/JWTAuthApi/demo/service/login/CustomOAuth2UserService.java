@@ -1,8 +1,8 @@
 package com.JWTAuthApi.demo.service.login;
 
-import com.JWTAuthApi.demo.domain.ProviderType;
-import com.JWTAuthApi.demo.domain.RoleType;
-import com.JWTAuthApi.demo.domain.User;
+import com.JWTAuthApi.demo.domain.user.ProviderType;
+import com.JWTAuthApi.demo.domain.user.RoleType;
+import com.JWTAuthApi.demo.domain.user.User;
 import com.JWTAuthApi.demo.mapper.UserRepository;
 import com.JWTAuthApi.demo.security.auth.exception.OAuthProviderMissMatchException;
 import com.JWTAuthApi.demo.security.auth.userInfo.UserPrincipal;

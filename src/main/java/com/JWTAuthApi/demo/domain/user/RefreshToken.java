@@ -1,4 +1,4 @@
-package com.JWTAuthApi.demo.domain;
+package com.JWTAuthApi.demo.domain.user;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

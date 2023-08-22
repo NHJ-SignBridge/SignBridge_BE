@@ -9,17 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
-  private Long userId;
-
-  private String email;
-
-  private String password;
-
-  private String username;
-
-  private ProviderType providerType;
-
-  private RoleType roleType;
+public class Word {
+  private Long wordId;
+  private int number;
+  private Category categoryId;
+  private String imageUrl;
+  private String keyword;
 }

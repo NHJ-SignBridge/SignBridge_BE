@@ -1,6 +1,6 @@
 package com.JWTAuthApi.demo.service.login;
 
-import com.JWTAuthApi.demo.domain.RefreshToken;
+import com.JWTAuthApi.demo.domain.user.RefreshToken;
 import com.JWTAuthApi.demo.mapper.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.JWTAuthApi.demo.mapper;
 
-import com.JWTAuthApi.demo.domain.RefreshToken;
+import com.JWTAuthApi.demo.domain.user.RefreshToken;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
