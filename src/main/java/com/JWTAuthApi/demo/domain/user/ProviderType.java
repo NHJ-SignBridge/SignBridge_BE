@@ -1,4 +1,4 @@
-package com.JWTAuthApi.demo.domain;
+package com.JWTAuthApi.demo.domain.user;
 
 public enum ProviderType {
   GOOGLE,

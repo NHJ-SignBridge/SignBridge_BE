@@ -1,6 +1,6 @@
 package com.JWTAuthApi.demo.security.auth.userInfo;
 
-import com.JWTAuthApi.demo.domain.ProviderType;
+import com.JWTAuthApi.demo.domain.user.ProviderType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

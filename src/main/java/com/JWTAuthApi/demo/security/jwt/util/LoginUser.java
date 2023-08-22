@@ -1,6 +1,5 @@
 package com.JWTAuthApi.demo.security.jwt.util;
 
-import com.JWTAuthApi.demo.domain.RoleType;
 import lombok.Data;
 
 @Data

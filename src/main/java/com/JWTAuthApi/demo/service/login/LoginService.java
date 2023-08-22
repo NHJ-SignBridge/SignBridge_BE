@@ -1,9 +1,9 @@
 package com.JWTAuthApi.demo.service.login;
 
-import com.JWTAuthApi.demo.domain.ProviderType;
-import com.JWTAuthApi.demo.domain.RefreshToken;
-import com.JWTAuthApi.demo.domain.RoleType;
-import com.JWTAuthApi.demo.domain.User;
+import com.JWTAuthApi.demo.domain.user.ProviderType;
+import com.JWTAuthApi.demo.domain.user.RefreshToken;
+import com.JWTAuthApi.demo.domain.user.RoleType;
+import com.JWTAuthApi.demo.domain.user.User;
 import com.JWTAuthApi.demo.dto.login.UserLoginDto;
 import com.JWTAuthApi.demo.dto.login.UserLoginResponseDto;
 import com.JWTAuthApi.demo.dto.login.UserSignupDto;

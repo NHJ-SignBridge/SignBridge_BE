@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.JWTAuthApi.demo.mapper.PracticeRepository">
+  <select id="findByWord" resultType="Word">
+    SELECT w.number, w.image_url, w.keyword
+    FROM Word w
+    JOIN Category c ON w.category_id = c.category_id
+    WHERE c.category_name = #{category_name};
+  </select>
+</mapper>

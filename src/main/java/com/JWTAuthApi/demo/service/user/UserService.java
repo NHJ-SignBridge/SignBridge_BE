@@ -1,14 +1,12 @@
 package com.JWTAuthApi.demo.service.user;
 
-import com.JWTAuthApi.demo.domain.RoleType;
-import com.JWTAuthApi.demo.domain.User;
+import com.JWTAuthApi.demo.domain.user.RoleType;
+import com.JWTAuthApi.demo.domain.user.User;
 import com.JWTAuthApi.demo.dto.token.RefreshTokenDto;
 import com.JWTAuthApi.demo.dto.login.UserLoginResponseDto;
 import com.JWTAuthApi.demo.dto.login.UserSignupResponseDto;
 import com.JWTAuthApi.demo.dto.user.UserUpdateDto;
 import com.JWTAuthApi.demo.dto.user.UserUpdateResponseDto;
-import com.JWTAuthApi.demo.exception.CustomException;
-import com.JWTAuthApi.demo.exception.ErrorCode;
 import com.JWTAuthApi.demo.mapper.UserRepository;
 import com.JWTAuthApi.demo.security.jwt.util.JwtTokenizer;
 import io.jsonwebtoken.Claims;

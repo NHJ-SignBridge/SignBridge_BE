@@ -1,10 +1,8 @@
 package com.JWTAuthApi.demo.security.auth.util;
 
-import com.JWTAuthApi.demo.domain.RefreshToken;
+import com.JWTAuthApi.demo.domain.user.RefreshToken;
 import com.JWTAuthApi.demo.mapper.RefreshTokenRepository;
 import com.JWTAuthApi.demo.security.auth.userInfo.UserPrincipal;
-import com.JWTAuthApi.demo.security.auth.util.CookieAuthorizationRequestRepository;
-import com.JWTAuthApi.demo.security.auth.util.CookieUtils;
 import com.JWTAuthApi.demo.security.jwt.util.JwtTokenizer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

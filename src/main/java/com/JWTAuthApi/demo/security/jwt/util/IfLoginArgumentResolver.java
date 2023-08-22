@@ -1,11 +1,9 @@
 package com.JWTAuthApi.demo.security.jwt.util;
 
-import com.JWTAuthApi.demo.domain.RoleType;
 import com.JWTAuthApi.demo.security.jwt.token.JwtAuthenticationToken;
 import org.springframework.core.MethodParameter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
