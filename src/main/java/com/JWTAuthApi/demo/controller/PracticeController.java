@@ -19,12 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("signbridge/learning")
+@RequestMapping("/Learning")
 @Slf4j
 public class PracticeController {
 
   private final PracticeService practiceService;
 
+  @GetMapping
+  public ResponseEntity<String> helloWorld() {
+    return ResponseEntity.ok("Hello, World!");
+  }
   // 1. learning -> practice -> 선택 카테고리 문제 리스트 반환
   @PostMapping("/practice")
   public ResponseEntity practiceStart(@RequestBody PracticeCategoryDto practiceCategoryDto) {
