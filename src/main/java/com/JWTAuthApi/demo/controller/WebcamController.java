@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/webcam")
 public class WebcamController {
-  @GetMapping
+  @PostMapping("/Learning/quiz")
   public ResponseEntity<String> runPythonScript() {
 
     String pythonScriptPath = "C:\\Users\\PC\\SignBridge\\SignBridge_AI\\skip.py"; // 파이썬 스크립트 경로 지정

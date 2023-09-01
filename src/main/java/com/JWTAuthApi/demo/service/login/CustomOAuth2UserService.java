@@ -47,19 +47,23 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     // GOOGLE, KAKAO, NAVER, FACEBOOK 등 provider 타입을 가져온다
     ProviderType providerType = ProviderType.valueOf(userRequest.getClientRegistration()
         .getRegistrationId().toUpperCase());
-
+    System.out.println(providerType);
     // providerType, Attributes로 분류하여 user 정보를 가져온다
     OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(providerType,
         oAuth2User.getAttributes());
-
+    System.out.println(userInfo.getEmail());
+    System.out.println(userInfo.getName());
+    System.out.println(userInfo.getAttributes());
+    if(userInfo.getEmail() == null){
+      System.out.println("에러어에어어레에러에러에러엘어레얼");
+    }
     User user = userRepository.findByEmail(userInfo.getEmail());
 
     // 이미 가입되어 있고 ProviderType 이 다르면 업데이트
       if (user != null) {
           if (providerType != user.getProviderType()) {
               throw new OAuthProviderMissMatchException(
-                  "you're signed up with " + providerType +
-                      " account. Please use your " + user.getProviderType() + " account to login.");
+                  "you're signed up with " + providerType + " account. Please use your " + user.getProviderType() + " account to login.");
           }
           user = updateMember(user, userInfo);
       } else  // 가입되어있지 않은 회원이면 가입

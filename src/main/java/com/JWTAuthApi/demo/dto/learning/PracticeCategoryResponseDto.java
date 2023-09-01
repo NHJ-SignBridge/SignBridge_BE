@@ -17,7 +17,6 @@ public class PracticeCategoryResponseDto {
   private List<Problem> problems;
 
   @Getter
-  @Setter
   @Builder
   @NoArgsConstructor
   @AllArgsConstructor
@@ -27,6 +26,11 @@ public class PracticeCategoryResponseDto {
     private String imageUrl;
     private String keyword;
 
+    public Problem(String imageUrl, String keyword, int number) {
+      this.imageUrl = imageUrl;
+      this.keyword = keyword;
+      this.number = number;
+    }
   }
 
 }
