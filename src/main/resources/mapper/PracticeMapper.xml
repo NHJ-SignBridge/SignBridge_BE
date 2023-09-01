@@ -9,9 +9,31 @@
     WHERE c.category_name = #{category_name};
   </select>
 
-<!--  <select id="findWordByKW" resultType="Word">-->
-<!--    SELECT word_id-->
-<!--    FROM Word-->
-<!--    WHERE keyword = #{wordList}-->
-<!--  </select>-->
+  <select id="findWordByKW" resultType="Word">
+    SELECT word_id
+    FROM Word
+    WHERE keyword IN
+    <foreach collection="wordList" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
+  <insert id="saveWord" useGeneratedKeys="true" keyProperty="practiced_word_id">
+    insert into Practiced_Word_List(user_id, word_id, learned_date)
+    values (#{userId}, #{wordId}, #{learned_date})
+  </insert>
+
+  <select id="wordCount" resultType="int">
+    select count(*)
+    from word
+    where category_id =
+     (select category_id
+     from word
+     where word_id = #{wordId});
+  </select>
+
+  <insert id="saveProgress" useGeneratedKeys="true" keyProperty="practiced_progress_id">
+    insert into Practiced_Progress(user_id, progress_rate, learned_date)
+    values (#{userId}, #{progressRate}, #{learned_date})
+  </insert>
 </mapper>
