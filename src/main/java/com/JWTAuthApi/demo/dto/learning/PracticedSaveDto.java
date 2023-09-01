@@ -1,5 +1,6 @@
-package com.JWTAuthApi.demo.domain;
+package com.JWTAuthApi.demo.dto.learning;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,8 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category {
+public class PracticedSaveDto {
 
-  private String category_id;
-  private String category_name;
+  private List<String> wordList;
 }

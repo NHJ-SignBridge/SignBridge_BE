@@ -13,9 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PracticedProgress {
 
-  private String practicedProgressId;
-  private User userId;
-  private Category categoryId;
+  private Long practiced_progress_id;
+  private Long userId;
   private double progressRate;
-  private LocalDateTime practicedDate;
+  private LocalDateTime learned_date;
 }
