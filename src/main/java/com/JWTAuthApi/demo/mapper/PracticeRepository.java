@@ -6,5 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface PracticeRepository {
-  List<Word> findByWord(String category);
+  List<Word> findWordByCG(String category);
+
+//  List<Word> findWordByKW(List<String> wordList);
 }

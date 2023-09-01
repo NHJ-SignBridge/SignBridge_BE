@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PracticeRecordDto {
+public class PracticeSaveDto {
 
   private List<String> wordList;
-  private Category categoryName;
+  private String categoryName;
 }
