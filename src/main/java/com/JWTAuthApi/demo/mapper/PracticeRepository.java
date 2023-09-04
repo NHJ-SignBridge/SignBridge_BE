@@ -1,9 +1,9 @@
 package com.JWTAuthApi.demo.mapper;
 
+import com.JWTAuthApi.demo.domain.PracticeBestProgress;
 import com.JWTAuthApi.demo.domain.PracticedProgress;
 import com.JWTAuthApi.demo.domain.PracticedWordList;
 import com.JWTAuthApi.demo.domain.Word;
-import java.time.LocalDateTime;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,7 +16,9 @@ public interface PracticeRepository {
 
   void saveWord(PracticedWordList practicedWordList);
 
-  int wordCount(Word wordId);
+  int wordCount(String wordId);
 
   void saveProgress(PracticedProgress practicedProgress);
+
+  List<PracticeBestProgress> bestProgress(Long userId);
 }
