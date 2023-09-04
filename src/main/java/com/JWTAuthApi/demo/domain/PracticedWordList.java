@@ -16,4 +16,5 @@ public class PracticedWordList {
   private Long userId;
   private Long wordId;
   private LocalDateTime learned_date;
+  private String categoryId;
 }

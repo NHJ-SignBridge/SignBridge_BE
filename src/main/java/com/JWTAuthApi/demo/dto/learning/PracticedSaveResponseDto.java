@@ -14,4 +14,5 @@ public class PracticedSaveResponseDto {
   private Long userId;
   private double progressRate;
   private LocalDateTime learned_date;
+  private String categoryId;
 }

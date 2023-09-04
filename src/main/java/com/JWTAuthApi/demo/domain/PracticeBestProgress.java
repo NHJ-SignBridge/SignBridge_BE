@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Word {
-  private Long wordId;
-  private int number;
-  private String categoryId;
-  private String imageUrl;
-  private String keyword;
+public class PracticeBestProgress {
+  private String categoryName;
+  private Double maxProgress;
 }

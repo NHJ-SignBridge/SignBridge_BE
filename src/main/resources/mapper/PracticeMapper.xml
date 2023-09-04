@@ -10,7 +10,7 @@
   </select>
 
   <select id="findWordByKW" resultType="Word">
-    SELECT word_id
+    SELECT *
     FROM Word
     WHERE keyword IN
     <foreach collection="wordList" item="item" open="(" separator="," close=")">
@@ -19,21 +19,26 @@
   </select>
 
   <insert id="saveWord" useGeneratedKeys="true" keyProperty="practiced_word_id">
-    insert into Practiced_Word_List(user_id, word_id, learned_date)
-    values (#{userId}, #{wordId}, #{learned_date})
+    insert into Practiced_Word_List(user_id, word_id, learned_date, category_id)
+    values (#{userId}, #{wordId}, #{learned_date}, #{categoryId})
   </insert>
 
   <select id="wordCount" resultType="int">
     select count(*)
     from word
-    where category_id =
-     (select category_id
-     from word
-     where word_id = #{wordId});
+    where category_id = #{categoryId};
   </select>
 
   <insert id="saveProgress" useGeneratedKeys="true" keyProperty="practiced_progress_id">
-    insert into Practiced_Progress(user_id, progress_rate, learned_date)
-    values (#{userId}, #{progressRate}, #{learned_date})
+    insert into Practiced_Progress(user_id, progress_rate, learned_date, category_id)
+    values (#{userId}, #{progressRate}, #{learned_date}, #{categoryId})
   </insert>
+
+  <select id="bestProgress" resultType="BestProgress">
+    SELECT c.category_name, MAX(p.progress_rate) AS maxProgress
+    FROM category c
+    LEFT JOIN Practiced_Progress p ON c.category_id = p.category_id
+    WHERE p.user_id = #{userId}
+    GROUP BY c.category_name;
+  </select>
 </mapper>

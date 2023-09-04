@@ -1,6 +1,7 @@
 package com.JWTAuthApi.demo.service.Learning;
 
 import com.JWTAuthApi.demo.config.JwtProperties;
+import com.JWTAuthApi.demo.domain.PracticeBestProgress;
 import com.JWTAuthApi.demo.domain.PracticedProgress;
 import com.JWTAuthApi.demo.domain.PracticedWordList;
 import com.JWTAuthApi.demo.domain.Word;
@@ -20,8 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.crypto.SecretKey;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,10 +64,9 @@ public class PracticeService {
     User user = userRepository.findByEmail(email);
 
     if (user != null) {
-      // 3. wordlist로 word테이블에서 wordId 가져오기
+      // 3. wordlist로 word테이블에서 정보 가져오기
       List<String> wordList = practicedSaveDto.getWordList();
       List<Word> wordIds = learningService.findWordByKW(wordList);
-
 
       LocalDateTime localDateTime = LocalDateTime.now();
 
@@ -78,23 +76,25 @@ public class PracticeService {
             .wordId(wordId.getWordId())
             .userId(user.getUserId())
             .learned_date(localDateTime)
+            .categoryId(wordId.getCategoryId())
             .build();
         practiceRepository.saveWord(practicedWordList);
       }
 
       // 5. wordIds의 개수를 구하고 Word테이블에서 wordIds에 해당하는 카테고리의 행 수를 가져옴.
       int numberOfWords = wordIds.size(); //학습한 단어 수
-      int totalNumberOfWords = practiceRepository.wordCount(wordIds.get(0)); //학습한 단어의 카테고리에 해당하는 행 수
+      int totalNumberOfWords = practiceRepository.wordCount(wordIds.get(0).getCategoryId()); //학습한 단어의 카테고리에 해당하는 행 수
 
       // 6. 학습 진행률 계산
       double progress = (double) numberOfWords/totalNumberOfWords;
       String progressPercentage = String.format("%.1f", progress);
 
-      // 7. 학습 진행률, learned_date, userId DB 저장
+      // 7. 학습 진행률, learned_date, userId,categoryId DB 저장
       practicedProgress = PracticedProgress.builder()
           .userId(user.getUserId())
           .progressRate(Double.parseDouble(progressPercentage))
           .learned_date(localDateTime)
+          .categoryId(wordIds.get(0).getCategoryId())
           .build();
       practiceRepository.saveProgress(practicedProgress);
 
@@ -104,7 +104,28 @@ public class PracticeService {
         .userId(practicedProgress.getUserId())
         .progressRate(practicedProgress.getProgressRate())
         .learned_date(practicedProgress.getLearned_date())
+        .categoryId(practicedProgress.getCategoryId())
         .build();
+
+  }
+
+  @Transactional
+  public List<PracticeBestProgress> practiceBestProgress(String token) {
+    //1. token으로 user email 확인
+    String secretKeyString = jwtProperties.getSecretKey();
+    byte[] secretKeyBytes = secretKeyString.getBytes();
+    SecretKey key = Keys.hmacShaKeyFor(secretKeyBytes);
+
+    Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
+    String email = claims.getSubject();
+
+    //2. email로 user테이블에서 userid 가져오기.
+    User user = userRepository.findByEmail(email);
+
+    //3. 해당 사용자의 카테고리별 최고 학습률을 반환
+    List<PracticeBestProgress> bestRecord = practiceRepository.bestProgress(user.getUserId());
+
+    return bestRecord;
   }
 }
 
