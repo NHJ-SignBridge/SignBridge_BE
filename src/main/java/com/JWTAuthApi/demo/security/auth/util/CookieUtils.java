@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Optional;
-
+//쿠키를 생성, 로드 및 삭제하는 데 사용되는 유틸리티 클래스입니다. 쿠키를 직렬화하고 역직렬화하여 객체를 저장 및 로드하는 데 사용됩니다.
 public class CookieUtils {
 
   public static Optional<Cookie> getCookie(HttpServletRequest request, String name) {

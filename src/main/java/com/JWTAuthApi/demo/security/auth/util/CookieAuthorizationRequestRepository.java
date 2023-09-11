@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+//OAuth2인증 요청과 관련된 정보를 쿠키에 저장하고 로드하는데 사용되는 클래스. 사용자의 리디렉션 URI및 인증 요청을 쿠키에 저장
 @Component
 public class CookieAuthorizationRequestRepository implements
     AuthorizationRequestRepository<OAuth2AuthorizationRequest> {

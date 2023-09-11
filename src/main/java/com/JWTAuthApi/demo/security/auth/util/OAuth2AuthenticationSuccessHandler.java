@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.JWTAuthApi.demo.security.auth.util.CookieAuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
-
+//OAuth2 인증 성공 시 실행되는 핸들러 클래스입니다. JWT 토큰을 생성하고 사용자 정보를 포함하여 리디렉션 URI로 사용자를 다시 보냅니다.
 @Slf4j
 @Component
 @RequiredArgsConstructor

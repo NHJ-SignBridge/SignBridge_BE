@@ -34,7 +34,7 @@
     values (#{userId}, #{progressRate}, #{learned_date}, #{categoryId})
   </insert>
 
-  <select id="bestProgress" resultType="BestProgress">
+  <select id="bestProgress" resultType="PracticeBestProgress">
     SELECT c.category_name, MAX(p.progress_rate) AS maxProgress
     FROM category c
     LEFT JOIN Practiced_Progress p ON c.category_id = p.category_id

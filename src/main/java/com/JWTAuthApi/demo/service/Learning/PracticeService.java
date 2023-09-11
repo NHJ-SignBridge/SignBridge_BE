@@ -13,6 +13,7 @@ import com.JWTAuthApi.demo.dto.learning.PracticedSaveDto;
 import com.JWTAuthApi.demo.dto.learning.PracticedSaveResponseDto;
 import com.JWTAuthApi.demo.mapper.PracticeRepository;
 import com.JWTAuthApi.demo.mapper.UserRepository;
+import com.JWTAuthApi.demo.security.jwt.util.JwtTokenizer;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -32,6 +33,7 @@ public class PracticeService {
   private final JwtProperties jwtProperties;
   private final UserRepository userRepository;
   private final PracticeRepository practiceRepository;
+  private final JwtTokenizer jwtTokenizer;
   private PracticedProgress practicedProgress;
 
   @Transactional
@@ -52,16 +54,9 @@ public class PracticeService {
   //학습 진행 기록(일시, 진행률, 학습한 단어)
   @Transactional
   public PracticedSaveResponseDto savePracticedList(String token, PracticedSaveDto practicedSaveDto) {
-    //1. token으로 user email 확인
-    String secretKeyString = jwtProperties.getSecretKey();
-    byte[] secretKeyBytes = secretKeyString.getBytes();
-    SecretKey key = Keys.hmacShaKeyFor(secretKeyBytes);
 
-    Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
-    String email = claims.getSubject();
-
-    //2. email로 user테이블에서 userid 가져오기.
-    User user = userRepository.findByEmail(email);
+    Long id = jwtTokenizer.getUserIdFromToken(token);
+    User user = userRepository.findById(id);
 
     if (user != null) {
       // 3. wordlist로 word테이블에서 정보 가져오기
@@ -111,19 +106,10 @@ public class PracticeService {
 
   @Transactional
   public List<PracticeBestProgress> practiceBestProgress(String token) {
-    //1. token으로 user email 확인
-    String secretKeyString = jwtProperties.getSecretKey();
-    byte[] secretKeyBytes = secretKeyString.getBytes();
-    SecretKey key = Keys.hmacShaKeyFor(secretKeyBytes);
+    Long id = jwtTokenizer.getUserIdFromToken(token);
 
-    Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
-    String email = claims.getSubject();
-
-    //2. email로 user테이블에서 userid 가져오기.
-    User user = userRepository.findByEmail(email);
-
-    //3. 해당 사용자의 카테고리별 최고 학습률을 반환
-    List<PracticeBestProgress> bestRecord = practiceRepository.bestProgress(user.getUserId());
+    //해당 사용자의 카테고리별 최고 학습률을 반환
+    List<PracticeBestProgress> bestRecord = practiceRepository.bestProgress(id);
 
     return bestRecord;
   }
