@@ -65,21 +65,20 @@ public class UserService {
   }
 
   @Transactional
-  public UserLoginResponseDto reissuingToken(RefreshTokenDto refreshTokenDto) {
+  public UserLoginResponseDto reissuingToken(String authorizationHeader) {
 
-    Claims claims = jwtTokenizer.parseRefreshToken(refreshTokenDto.getRefreshToken());
-    Long userId = Long.valueOf((Integer) claims.get("userId"));
-    User user = this.findById(userId);
+    Long id = jwtTokenizer.getUserIdFromToken(authorizationHeader);
+    User user = userRepository.findById(id);
 
-    String email = claims.getSubject();
-    String name = (String) claims.get("username");
-    String accessToken = jwtTokenizer.createAccessToken(userId, email, name,
+    String accessToken = jwtTokenizer.createAccessToken(user.getUserId(), user.getEmail(), user.getUsername(),
         RoleType.USER.getCode());
+
+    String token = authorizationHeader.replace("Bearer ", "");
 
     return UserLoginResponseDto.builder()
         .accessToken(accessToken)
-        .refreshToken(refreshTokenDto.getRefreshToken())
-        .userId(userId)
+        .refreshToken(token)
+        .userId(user.getUserId())
         .name(user.getUsername())
         .build();
   }

@@ -53,10 +53,10 @@ public class UserController {
     userService.updatePassword(loginUser.getUserId(), userPasswordDto.getPassword());
   }
 
-  // 토큰 재발급
   @PostMapping("/refreshToken")
-  public ResponseEntity requestRefresh(@RequestBody RefreshTokenDto refreshTokenDto) {
-    UserLoginResponseDto userLoginResponseDto = userService.reissuingToken(refreshTokenDto);
+  public ResponseEntity requestRefresh(@RequestHeader("Authorization") String authorizationHeader) {
+    UserLoginResponseDto userLoginResponseDto = userService.reissuingToken(authorizationHeader);
     return new ResponseEntity<>(userLoginResponseDto, HttpStatus.OK);
   }
+
 }

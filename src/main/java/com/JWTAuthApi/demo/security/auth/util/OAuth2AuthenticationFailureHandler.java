@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.JWTAuthApi.demo.security.auth.util.CookieAuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
-
+// OAuth2 인증 실패 시 실행되는 핸들러 클래스입니다. 실패한 요청을 이전의 리디렉션 URI로 다시 보냅니다.
 @Component
 @RequiredArgsConstructor
 public class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {

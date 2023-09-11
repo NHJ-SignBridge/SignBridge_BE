@@ -20,7 +20,7 @@ public class RefreshTokenService {
     return refreshTokenRepository.findRefreshToken(userId);
   }
 
-  public void deleteRefreshToken(String refreshToken) {
-    refreshTokenRepository.deleteRefreshToken(refreshToken);
+  public void deleteRefreshToken(String token) {
+    refreshTokenRepository.deleteRefreshToken(token);
   }
 }

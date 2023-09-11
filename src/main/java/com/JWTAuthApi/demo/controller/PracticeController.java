@@ -5,6 +5,7 @@ import com.JWTAuthApi.demo.dto.learning.PracticeCategoryDto;
 import com.JWTAuthApi.demo.dto.learning.PracticeCategoryResponseDto;
 import com.JWTAuthApi.demo.dto.learning.PracticedSaveDto;
 import com.JWTAuthApi.demo.dto.learning.PracticedSaveResponseDto;
+import com.JWTAuthApi.demo.security.jwt.util.JwtTokenizer;
 import com.JWTAuthApi.demo.service.Learning.PracticeService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PracticeController {
 
   private final PracticeService practiceService;
-
+  private final JwtTokenizer jwtTokenizer;
 
   // learning > practice > 선택 카테고리 문제 리스트 반환
   @PostMapping("/start")
@@ -36,9 +37,8 @@ public class PracticeController {
   // 진행 종료 버튼 -> 진행한 학습 기록(practicedWordList, practicedProgress) 저장
   @PostMapping("/save")
   public ResponseEntity practicedSave(@RequestHeader("Authorization") String authorizationHeader, @RequestBody PracticedSaveDto practicedSaveDto) {
-    String token = authorizationHeader.replace("Bearer ", "");
     //학습 진행률 반환
-    PracticedSaveResponseDto practicedSaveResponseDto = practiceService.savePracticedList(token, practicedSaveDto);
+    PracticedSaveResponseDto practicedSaveResponseDto = practiceService.savePracticedList(authorizationHeader, practicedSaveDto);
 
     return new ResponseEntity<>(practicedSaveResponseDto, HttpStatus.OK);
   }
@@ -46,9 +46,7 @@ public class PracticeController {
   // 내 정보 -> 학습 기록 들어가면 카테고리별로 {최고 학습 진행률+그게 기록된 일시} 리턴
   @PostMapping("/best-progress")
   public List<PracticeBestProgress> practiceBestProgress(@RequestHeader("Authorization") String authorizationHeader) {
-    String token = authorizationHeader.replace("Bearer ", "");
-
-    return practiceService.practiceBestProgress(token);
+    return practiceService.practiceBestProgress(authorizationHeader);
   }
 
   // 학습 기록 -> 더보기 -> 선택한 카테고리에 해당하는 기록의 일자 리턴

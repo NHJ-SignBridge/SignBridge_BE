@@ -47,7 +47,7 @@ public class SecurityConfig {
         .httpBasic().disable()  // http basic 기반 로그인 인증 창 비활성화
         .authorizeRequests()
         .requestMatchers(CorsUtils::isPreFlightRequest).permitAll() // 예비 요청 Preflight 허용
-        .antMatchers("/", "/users", "/users/login", "/user/refreshToken", "/webcam", "/practice/start", "/Learning/quiz", "/images/{imageName}").permitAll()
+        .antMatchers("/", "/users", "/users/login", "/users/logout", "/users/refreshToken", "/webcam", "/practice/start", "/Learning/quiz", "/images/{imageName}").permitAll()
         .antMatchers(GET, "/user").hasAnyRole("USER", "ADMIN")
         .antMatchers(PUT, "/user").hasAnyRole("USER", "ADMIN")
         .anyRequest().hasAnyRole("USER", "ADMIN")

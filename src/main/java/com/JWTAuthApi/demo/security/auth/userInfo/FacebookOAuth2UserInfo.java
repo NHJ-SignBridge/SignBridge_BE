@@ -1,16 +1,15 @@
 package com.JWTAuthApi.demo.security.auth.userInfo;
 
 import java.util.Map;
-// Google OAuth2로부터 사용자 정보 추출하는 클래스, OAuth2UserInfo 클래스를 상속하고 ID,이름,이메일을 추출하여 반환
-public class GoogleOAuth2UserInfo extends OAuth2UserInfo {
 
-  public GoogleOAuth2UserInfo(Map<String, Object> attributes) {
+public class FacebookOAuth2UserInfo extends OAuth2UserInfo{
+  public FacebookOAuth2UserInfo(Map<String, Object> attributes) {
     super(attributes);
   }
 
   @Override
   public String getId() {
-    return (String) attributes.get("sub");
+    return attributes.get("id").toString();
   }
 
   @Override
@@ -22,4 +21,6 @@ public class GoogleOAuth2UserInfo extends OAuth2UserInfo {
   public String getEmail() {
     return (String) attributes.get("email");
   }
+
+
 }

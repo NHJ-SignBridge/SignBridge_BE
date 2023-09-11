@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import java.util.Collection;
 import java.util.Map;
 
+// OAuth2또는 OpenID Connect(OIDC)로 인증된 사용자 정보 저장 클래스. Spring Security의 'OAuth2User'및 'OidcUser' 인터페이스를 구현하며, 사용자 정보와 권한 포함.
 @Slf4j
 @Getter
 @Setter

@@ -20,7 +20,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-
+//OAuth2를 사용하여 사용자를 로드하는 서비스 클래스입니다. Google, Kakao, Naver 등 다양한 OAuth2 공급자에 대한 사용자 정보를 가져와 데이터베이스에서 사용자를 로드 또는 생성합니다.
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -54,22 +54,20 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     System.out.println(userInfo.getEmail());
     System.out.println(userInfo.getName());
     System.out.println(userInfo.getAttributes());
-    if(userInfo.getEmail() == null){
-      System.out.println("에러어에어어레에러에러에러엘어레얼");
-    }
+
     User user = userRepository.findByEmail(userInfo.getEmail());
 
     // 이미 가입되어 있고 ProviderType 이 다르면 업데이트
-      if (user != null) {
-          if (providerType != user.getProviderType()) {
-              throw new OAuthProviderMissMatchException(
+    if (user != null) {
+      if (providerType != user.getProviderType()) {
+        throw new OAuthProviderMissMatchException(
                   "you're signed up with " + providerType + " account. Please use your " + user.getProviderType() + " account to login.");
-          }
-          user = updateMember(user, userInfo);
-      } else  // 가입되어있지 않은 회원이면 가입
-      {
-          user = createUser(userInfo, providerType);
       }
+      user = updateMember(user, userInfo);
+    } else { // 가입되어있지 않은 회원이면 가입
+
+          user = createUser(userInfo, providerType);
+    }
 
     // OAuth2User 상속받은 MemberPrincipal 객체에 담아서 반환
     return new UserPrincipal(
