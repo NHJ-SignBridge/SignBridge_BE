@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.JWTAuthApi.demo.mapper.PracticeRepository">
-  <select id="findWordByCG" resultType="Word">
+  <select id="findWordByCG" resultType="com.example.SignBridge_BE.domain.Word">
     SELECT w.number, w.image_url, w.keyword
     FROM Word w
     JOIN Category c ON w.category_id = c.category_id
     WHERE c.category_name = #{category_name};
   </select>
 
-  <select id="findWordByKW" resultType="Word">
+  <select id="findWordByKW" resultType="com.example.SignBridge_BE.domain.Word">
     SELECT *
     FROM Word
     WHERE keyword IN
@@ -34,7 +34,7 @@
     values (#{userId}, #{progressRate}, #{learned_date}, #{categoryId})
   </insert>
 
-  <select id="bestProgress" resultType="PracticeBestProgress">
+  <select id="bestProgress" resultType="com.example.SignBridge_BE.domain.PracticeBestProgress">
     SELECT c.category_name, MAX(p.progress_rate) AS maxProgress
     FROM category c
     LEFT JOIN Practiced_Progress p ON c.category_id = p.category_id
